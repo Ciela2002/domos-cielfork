@@ -111,19 +111,8 @@
     }
 
     function updateReplaceRules(changes) {
-        if (changes.ruleCount) {
-            ruleCount = changes.ruleCount.newValue;
-        }
-        replaceRules = [];
-        for (let i = 1; i <= ruleCount; i++) {
-            let currRule = `replaceRule${i}`;
-            if (changes[currRule].newValue) {
-                replaceRules.push(changes[currRule].newValue);
-            } else {
-                replaceRules.push(changes[currRule]);
-            }
-        }
-        replaceRules.sort((a, b) => b.lhs.length - a.lhs.length);
+        // Reload all rules from storage directly rather than trying to merge changes
+        browser.storage.local.get().then(initReplaceRules);
     }
 
 })();
